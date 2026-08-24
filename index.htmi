@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pembe Zambak 💕</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: linear-gradient(160deg, #fff0f5 0%, #ffe4ec 40%, #ffd6e7 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ========== Lily Container ========== */
+    .lily {
+      position: relative;
+      width: 220px;
+      height: 320px;
+      margin-bottom: 30px;
+      transform-origin: center bottom;
+    }
+
+    /* Stem */
+    .stem {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 8px;
+      height: 160px;
+      background: linear-gradient(to top, #2e7d32, #66bb6a);
+      border-radius: 4px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    /* Leaves */
+    .leaf {
+      position: absolute;
+      width: 50px;
+      height: 22px;
+      background: linear-gradient(135deg, #43a047, #2e7d32);
+      border-radius: 0 50% 50% 50%;
+      z-index: 1;
+    }
+    .leaf.left {
+      bottom: 90px;
+      left: 40px;
+      transform: rotate(-40deg);
+      animation: leaf-sway 4s ease-in-out infinite;
+    }
+    .leaf.right {
+      bottom: 70px;
+      right: 35px;
+      transform: rotate(35deg) scaleX(-1);
+      animation: leaf-sway 4.5s ease-in-out infinite reverse;
+    }
+
+    /* Flower head */
+    .flower {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 160px;
+      height: 160px;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    /* Petals – 6 for a classic lily look */
+    .petal {
+      position: absolute;
+      width: 55px;
+      height: 95px;
+      background: linear-gradient(to bottom, #ff9ec8 0%, #ff6b9d 45%, #ff4d88 100%);
+      border-radius: 50% 50% 45% 45% / 70% 70% 30% 30%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 50% 90%;
+      box-shadow: inset 0 -8px 12px rgba(255, 255, 255, 0.35),
+                  0 4px 10px rgba(255, 80, 140, 0.25);
+      opacity: 0;
+      animation: bloom 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .petal:nth-child(1) { transform: translate(-50%, -90%) rotate(0deg) scale(0.2); animation-delay: 0.3s; }
+    .petal:nth-child(2) { transform: translate(-50%, -90%) rotate(60deg) scale(0.2); animation-delay: 0.45s; }
+    .petal:nth-child(3) { transform: translate(-50%, -90%) rotate(120deg) scale(0.2); animation-delay: 0.6s; }
+    .petal:nth-child(4) { transform: translate(-50%, -90%) rotate(180deg) scale(0.2); animation-delay: 0.75s; }
+    .petal:nth-child(5) { transform: translate(-50%, -90%) rotate(240deg) scale(0.2); animation-delay: 0.9s; }
+    .petal:nth-child(6) { transform: translate(-50%, -90%) rotate(300deg) scale(0.2); animation-delay: 1.05s; }
+
+    /* Center of the lily */
+    .center {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: radial-gradient(circle at 40% 40%, #fff9c4, #ffd54f 60%, #ffb300);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 3;
+      box-shadow: 0 0 12px rgba(255, 200, 50, 0.6);
+      animation: center-pop 0.6s 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* Soft glow behind flower */
+    .glow {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(255, 150, 190, 0.35) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 0;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* Message */
+    .message {
+      text-align: center;
+      color: #c2185b;
+      padding: 0 24px;
+      max-width: 320px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1.2s 2s ease forwards;
+    }
+
+    .message h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .message p {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .hearts {
+      margin-top: 12px;
+      font-size: 1.4rem;
+      letter-spacing: 6px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    /* Animations */
+    @keyframes bloom {
+      to {
+        opacity: 1;
+        transform: translate(-50%, -90%) rotate(var(--r, 0deg)) scale(1);
+      }
+    }
+
+    .petal:nth-child(1) { --r: 0deg; }
+    .petal:nth-child(2) { --r: 60deg; }
+    .petal:nth-child(3) { --r: 120deg; }
+    .petal:nth-child(4) { --r: 180deg; }
+    .petal:nth-child(5) { --r: 240deg; }
+    .petal:nth-child(6) { --r: 300deg; }
+
+    @keyframes center-pop {
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.9; }
+    }
+
+    @keyframes leaf-sway {
+      0%, 100% { transform: rotate(-40deg); }
+      50% { transform: rotate(-32deg); }
+    }
+
+    .leaf.right {
+      animation-name: leaf-sway-right;
+    }
+    @keyframes leaf-sway-right {
+      0%, 100% { transform: rotate(35deg) scaleX(-1); }
+      50% { transform: rotate(28deg) scaleX(-1); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.1); }
+      60% { transform: scale(1); }
+    }
+
+    /* Small floating hearts */
+    .floating-heart {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0;
+      animation: floatUp 6s ease-in infinite;
+      pointer-events: none;
+    }
+    .floating-heart:nth-child(1) { left: 15%; animation-delay: 2.5s; }
+    .floating-heart:nth-child(2) { left: 75%; animation-delay: 3.2s; }
+    .floating-heart:nth-child(3) { left: 40%; animation-delay: 4s; }
+    .floating-heart:nth-child(4) { left: 85%; animation-delay: 4.8s; }
+    .floating-heart:nth-child(5) { left: 25%; animation-delay: 5.5s; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-20vh) scale(1.1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts -->
+  <div class="floating-heart">💕</div>
+  <div class="floating-heart">💗</div>
+  <div class="floating-heart">💖</div>
+  <div class="floating-heart">💕</div>
+  <div class="floating-heart">💗</div>
+
+  <!-- The Lily -->
+  <div class="lily">
+    <div class="glow"></div>
+    <div class="stem"></div>
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+
+    <div class="flower">
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="center"></div>
+    </div>
+  </div>
+
+  <!-- Turkish message -->
+  <div class="message">
+    <h1>Sevgilim 💕</h1>
+    <p>
+      Sen benim pembe zambakımsın.<br>
+      Güzelliğin ve saflığınla kalbimi dolduruyorsun.<br>
+      Seni çok seviyorum.
+    </p>
+    <div class="hearts">💖 💗 💕</div>
+  </div>
+
+</body>
+</html>
